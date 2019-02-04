@@ -36,9 +36,9 @@ XMLHttpRequest::open = ->
 
             # console.log(this.response)
 
-            if modified_response.AddMsgList.length > 0:
+            if modified_response.AddMsgList.length > 0 and modified_response.AddMsgList[0].MsgType == 10002
               # for wx_msg in modified_response
-                if wx_msg.MsgType == 10002
+                # if wx_msg.MsgType == 10002
                     # modified_response.AddMsgList[0].MsgType == 10002
                     Object.defineProperty(this, "response", {writable: true})
                     # modified_response.AddMsgList[0].Content = 'test防撤回'
