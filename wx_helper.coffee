@@ -22,7 +22,7 @@ webwxsync_url = 'https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxsync?'
 XMLHttpRequest::open = ->
     # @addEventListener 'load', ->
     @addEventListener 'readystatechange', ->
-        console.log 'request completed!'
+        # console.log 'request completed!'
         bind_mention_user()
       # console.log @readyState
       # #will always be 4 (ajax is completed successfully)
@@ -36,9 +36,11 @@ XMLHttpRequest::open = ->
 
             # console.log(this.response)
 
-            if modified_response.AddMsgList.length > 0 and modified_response.AddMsgList[0].MsgType == 10002
-              # for wx_msg in modified_response
-                # if wx_msg.MsgType == 10002
+            if modified_response.AddMsgList.length > 0
+              console.log(modified_response)
+              for wx_msg in modified_response.AddMsgList
+                console.log wx_msg
+                if wx_msg.MsgType == 10002
                     # modified_response.AddMsgList[0].MsgType == 10002
                     Object.defineProperty(this, "response", {writable: true})
                     # modified_response.AddMsgList[0].Content = 'test防撤回'
@@ -46,8 +48,11 @@ XMLHttpRequest::open = ->
                     GM_notification("有人想撤回消息噢")
                     modified_response = JSON.stringify(modified_response)
                     this.response = modified_response
-                # else if wx_msg.MsgType == 10001
-                    # console.log "据说有红包"
+                else if wx_msg.MsgType in [10000, 10001] and
+                  wx_msg.Content.indexOf "发出红包" > -1
+                    console.log "据说发出了红包"
+                else if wx_msg.MsgType == 10000
+                    GM_notification "据说收到红包"
                 # console.log(@)
                 # console.log(this.response)
                 # console.log "modified_response"
@@ -236,7 +241,7 @@ editarea.onkeypress = (key) ->
     # setTimeout(get_input_user(), 100000)
     #
 bind_mention_user = ->
-    console.log('rebind editarea')
+    # console.log('rebind editarea')
     editarea = document.getElementById("editArea")
     editarea.onkeypress = (key) ->
         console.log('keypress:' + key.key)
