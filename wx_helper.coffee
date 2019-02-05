@@ -18,6 +18,10 @@
 # # })();
 origOpen = XMLHttpRequest::open
 webwxsync_url = 'https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxsync?'
+webwxinit_url = 'https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxinit?'
+webwxgetcontact_url = 'https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxgetcontact?'
+
+contact_list = {}
 
 XMLHttpRequest::open = ->
     # @addEventListener 'load', ->
@@ -28,18 +32,31 @@ XMLHttpRequest::open = ->
       # #will always be 4 (ajax is completed successfully)
       #whatever the response was
         if @responseURL.lastIndexOf(
+            webwxgetcontact_url) == 0
+            original_response = @responseText
+            modified_response = JSON.parse(original_response)
+            console.log 'webwxgetcontact_url request'
+            for i in modified_response.MemberList
+              contact_list[i.UserName] = i.NickName
+        else if @responseURL.lastIndexOf(
+            webwxinit_url) == 0
+            original_response = @responseText
+            modified_response = JSON.parse(original_response)
+            console.log 'webwxinit_url request'
+            console.log modified_response
+        else if @responseURL.lastIndexOf(
             webwxsync_url) == 0 and
                 @readyState == 4
-            console.log 'webwxsync_url request'
+            # console.log 'webwxsync_url request'
             original_response = @responseText
             modified_response = JSON.parse(original_response)
 
             # console.log(this.response)
 
             if modified_response.AddMsgList.length > 0
-              console.log(modified_response)
               for wx_msg in modified_response.AddMsgList
                 console.log wx_msg
+                console.log contact_list[wx_msg.FromUserName], wx_msg.FromUserName
                 if wx_msg.MsgType == 10002
                     # modified_response.AddMsgList[0].MsgType == 10002
                     Object.defineProperty(this, "response", {writable: true})
@@ -49,7 +66,7 @@ XMLHttpRequest::open = ->
                     modified_response = JSON.stringify(modified_response)
                     this.response = modified_response
                 else if wx_msg.MsgType in [10000, 10001] and
-                  wx_msg.Content.indexOf "发出红包" > -1
+                  (wx_msg.Content.indexOf "发出红包") > -1
                     console.log "据说发出了红包"
                 else if wx_msg.MsgType == 10000
                     GM_notification "据说收到红包"
