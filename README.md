@@ -1,9 +1,10 @@
 # wx_helper
-wx.qq.com helper
+网页版微信助手
 * 消息防撤回
 * 群聊天@补全名字
 * 红包提醒
 
+wx.qq.com helper
 ## Features
 
 - **Block message recall.**
