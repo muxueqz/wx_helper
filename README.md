@@ -12,6 +12,7 @@ wx.qq.com helper
 - Hong Bao Notification.
 
 ## 享用方法
-- 安装`Tampermonkey`
+- 确保已安装Google Chrome或Firefox浏览器
+- 在浏览器中安装`Tampermonkey`扩展
 - 点击 [releases](https://github.com/muxueqz/wx_helper/releases/)里的`user.js`，把它加到`Tampermonkey`里
 - 即可享用！
