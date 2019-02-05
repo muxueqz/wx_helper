@@ -13,5 +13,5 @@ wx.qq.com helper
 
 ## 享用方法
 - 安装`Tampermonkey`
-- 在`Tampermonkey`里把[releases](https://github.com/muxueqz/wx_helper/releases/)里的js添加进来
+- 点击 [releases](https://github.com/muxueqz/wx_helper/releases/)里的`user.js`，把它加到`Tampermonkey`里
 - 即可享用！
