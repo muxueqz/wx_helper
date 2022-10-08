@@ -5,7 +5,7 @@
             # # val = $(this).val()
         # console.log('select')
 # origOpen = XMLHttpRequest.prototype.open
-# XMLHttpRequest.prototype.open = -> 
+# XMLHttpRequest.prototype.open = ->
     # console.log('xml http request')
         # # console.log('request started!');
         # this.addEventListener('load', function() {
@@ -17,9 +17,10 @@
     # # };
 # # })();
 origOpen = XMLHttpRequest::open
-webwxsync_url = 'https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxsync?'
-webwxinit_url = 'https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxinit?'
-webwxgetcontact_url = 'https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxgetcontact?'
+webwx_host = window.location.host
+webwxsync_url = 'https://' + webwx_host + '/cgi-bin/mmwebwx-bin/webwxsync?'
+webwxinit_url = 'https://' + webwx_host + '/cgi-bin/mmwebwx-bin/webwxinit?'
+webwxgetcontact_url = 'https://' + webwx_host + '/cgi-bin/mmwebwx-bin/webwxgetcontact?'
 
 contact_list = {}
 
